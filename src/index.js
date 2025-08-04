@@ -30,6 +30,7 @@ function addTask(taskDesc, dueDate, doneStatus) {
     const doneDate = doneStatus ? createdDate : null;
     const newTask = new Task(taskId,taskDesc, dueDate, doneStatus,createdDate, doneDate);
     allTasks.push(newTask);
+    console.log("task added");
 }
 
 function deleteTask(taskId) {
@@ -53,6 +54,50 @@ function showAllTasksConsole() {
 window.showAllTasksConsole = showAllTasksConsole;
 window.addTask = addTask;
 window.deleteTask = deleteTask;
+
+function showAllTasksDom(){
+    const mainContainer = document.querySelector("#maincontainer");
+    mainContainer.textContent = '';
+    allTasks.forEach(task => {
+        const li = document.createElement("li");
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "delete";
+        const editButton = document.createElement("button");
+        editButton.textContent = "edit";
+        
+
+        deleteButton.addEventListener("click", (e) => {
+            deleteTask(task.taskId);
+            mainContainer.removeChild(li)
+        });
+        
+        editButton.addEventListener("click", (e) => {
+            deleteTask(task.taskId);
+            mainContainer.removeChild(li)
+        });
+
+        li.textContent = `Task Id: ${task.taskId}. You have to do: ${task.taskDesc} by ${task.dueDate} And you did it on ${task.doneDate}`;
+        li.appendChild(deleteButton);
+        li.appendChild(editButton);
+        mainContainer.appendChild(li);
+    });
+}
+
+const newTaskButton = document.querySelector("#newTaskButton");
+const taskField = document.querySelector("#taskField");
+const dueDateField = document.querySelector("#dueDateField");
+const doneField = document.querySelector("#doneField");
+
+
+
+newTaskButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    addTask(taskField.value, dueDateField.value, doneField.checked);
+    showAllTasksDom();
+    }
+)
+
+showAllTasksDom();
 
 
 

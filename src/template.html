@@ -6,6 +6,29 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="inputform">
+        <label for="taskDesc">New task</label>
+        <input type="text" name="taskDesc" id="taskField">
+        <label for="Duedate">Duedate:</label>
+
+        <input
+        type="date"
+        id="dueDateField"
+        name="Duedate"
+        value=""
+        min="2018-01-01"
+        max="2050-12-31" />
+        
+        <label>
+            <input type="checkbox" name="taskStatus" id="doneField" unchecked>
+            Task completed
+        </label>
+
+        <button id="newTaskButton">Submit</button>
+
+
+    </div>
     
+    <div id="maincontainer"></div>
 </body>
 </html>
