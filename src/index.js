@@ -24,6 +24,14 @@ class Task {
             }
         }
     }
+function editTask(taskId,taskDesc, dueDate, doneStatus) {
+    const index = allTasks.findIndex((task) => task.taskId === taskId)
+    const taskToEdit = allTasks[index]
+    taskToEdit.taskDesc = taskDesc;
+    taskToEdit.dueDate = dueDate;
+    console.log("task edited");
+}
+
 function addTask(taskDesc, dueDate, doneStatus) {
     const taskId = crypto.randomUUID();
     const createdDate = format(new Date(), "yyyy-MM-dd");
@@ -72,8 +80,29 @@ function showAllTasksDom(){
         });
         
         editButton.addEventListener("click", (e) => {
-            deleteTask(task.taskId);
-            mainContainer.removeChild(li)
+            console.log("want to edit");
+            const editForm = document.createElement("Div")
+            const EditTaskDescLabel = document.createElement("label");
+            EditTaskDescLabel.textContent = "Task Description"
+            const EditTaskDescInput = document.createElement("input");
+            EditTaskDescInput.value = task.taskDesc;
+            const saveEditButton = document.createElement("button");
+            editForm.appendChild(EditTaskDescLabel)
+            editForm.appendChild(EditTaskDescInput)
+            editForm.appendChild(saveEditButton)
+            saveEditButton.textContent = "Save";
+            li.appendChild(editForm);
+            saveEditButton.addEventListener("click",(e)=>{
+
+                editTask(task.taskId,EditTaskDescInput.value, task.dueDate, task.doneStatus);
+                li.innerHTML = ""
+                li.textContent = `Task Id: ${task.taskId}. You have to do: ${task.taskDesc} by ${task.dueDate} And you did it on ${task.doneDate}`;
+                //li.removeChild(editForm);
+                li.appendChild(deleteButton);
+                li.appendChild(editButton);
+            })
+
+            
         });
 
         li.textContent = `Task Id: ${task.taskId}. You have to do: ${task.taskDesc} by ${task.dueDate} And you did it on ${task.doneDate}`;
